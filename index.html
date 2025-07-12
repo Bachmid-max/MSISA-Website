@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Majelis Studi Islam Sabtu Ahad</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to bottom right, #e0f7fa, #ffffff);
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 4rem 2rem 1rem 2rem;
+      text-align: center;
+      background: transparent;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      color: #004d40;
+      text-shadow: 1px 1px 2px rgba(255,255,255,0.6);
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #00796b;
+      margin-top: 0.5rem;
+      text-shadow: 1px 1px 2px rgba(255,255,255,0.6);
+    }
+
+    /* Tombol garis 3 (hamburger) */
+    .menu-toggle {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 1100;
+      font-size: 2.5rem;
+      cursor: pointer;
+      background-color: #004d40;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .menu-toggle:hover {
+      background-color: #00332e;
+    }
+
+    nav {
+      position: fixed;
+      left: -250px;
+      top: 0;
+      width: 250px;
+      height: 100%;
+      background-color: #00796b;
+      color: white;
+      transition: left 0.3s ease-in-out;
+      z-index: 1000;
+      padding-top: 3.5rem;
+      overflow-y: auto;
+    }
+
+    nav.open {
+      left: 0;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 1rem;
+    }
+
+    nav ul li {
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      transition: background-color 0.3s ease;
+    }
+
+    nav ul li:hover {
+      background-color: #004d40;
+    }
+
+    nav ul li.submenu > ul {
+      display: none;
+      padding-left: 1rem;
+      margin-top: 0.5rem;
+    }
+
+    nav ul li.submenu.active > ul {
+      display: block;
+    }
+
+    nav ul li.submenu > ul li {
+      padding: 0.5rem 0;
+      border: none;
+      cursor: pointer;
+    }
+
+    nav ul li.submenu > ul li:hover {
+      background-color: #004d40;
+    }
+
+    main {
+      margin-left: 0;
+      padding: 2rem;
+      transition: margin-left 0.3s ease-in-out;
+      min-height: 100vh;
+    }
+
+    main.nav-open {
+      margin-left: 250px;
+    }
+
+    .content-section {
+      margin-bottom: 2rem;
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: none;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .content-section.active {
+      display: block;
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Gambar hero tiap halaman */
+    .hero-image {
+      width: 100%;
+      max-height: 350px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+    .hero-image:hover {
+      transform: scale(1.05);
+    }
+
+    /* Watermark styling */
+    .watermark {
+      position: fixed;
+      bottom: 10px;
+      right: 15px;
+      font-size: 0.9rem;
+      color: rgba(0, 77, 64, 0.3);
+      user-select: none;
+      pointer-events: none;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      z-index: 1200;
+    }
+
+    @media (min-width: 768px) {
+      nav {
+        left: 0;
+      }
+      .menu-toggle {
+        display: none;
+      }
+      main {
+        margin-left: 250px;
+      }
+      main.nav-open {
+        margin-left: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="menu-toggle" id="menuToggle" aria-label="Toggle menu" role="button" tabindex="0">☰</div>
+
+  <nav id="sidebar" role="navigation" aria-label="Sidebar menu">
+    <ul>
+      <li data-section="beranda">Beranda</li>
+      <li class="submenu" tabindex="0" aria-haspopup="true" aria-expanded="false">
+        Tentang Kami
+        <ul>
+          <li data-section="visi">Visi & Misi</li>
+          <li data-section="sejarah">Sejarah</li>
+          <li data-section="struktur">Struktur Organisasi</li>
+        </ul>
+      </li>
+      <li data-section="jadwal">Jadwal Kajian</li>
+      <li data-section="dokumentasi">Dokumentasi</li>
+      <li data-section="daftar">Pendaftaran</li>
+      <li data-section="kontak">Kontak</li>
+    </ul>
+  </nav>
+
+  <main id="main-content" role="main">
+    <!-- Beranda -->
+    <section id="beranda" class="content-section active" tabindex="0">
+      <header>
+        <h1>Majelis Studi Islam Sabtu Ahad</h1>
+        <p>Tempat Berkumpulnya Pemuda Pencari Ilmu dan Hikmah</p>
+      </header>
+      <img
+        class="hero-image"
+        src="https://cdn.pixabay.com/photo/2019/05/04/18/13/quran-4178711_1280.jpg"
+        alt="Gambar Al Quran di beranda"
+      />
+      <p>
+        Majelis Studi Islam Sabtu Ahad (MSI-SA) merupakan komunitas pelajar dan mahasiswa yang aktif berdiskusi dan memperdalam ilmu agama. Setiap akhir pekan, kami mengadakan kajian, diskusi, serta kegiatan sosial untuk membangun ukhuwah dan karakter Islami.
+      </p>
+    </section>
+
+    <!-- Visi & Misi -->
+    <section id="visi" class="content-section" tabindex="0">
+      <h2>Visi & Misi</h2>
+      <img
+        class="hero-image"
+        src="https://cdn.pixabay.com/photo/2020/03/20/16/00/quran-4951042_1280.jpg"
+        alt="Gambar Al Quran untuk visi misi"
+      />
+      <p><strong>Visi:</strong> Menjadi wadah pembinaan dan pencerahan Islam untuk generasi muda yang berakhlak mulia dan berilmu.</p>
+      <p><strong>Misi:</strong></p>
+      <ul>
+        <li>Menyelenggarakan kajian rutin dan intensif untuk meningkatkan pengetahuan agama.</li>
+        <li>Menumbuhkan semangat ukhuwah Islamiyah dan solidaritas antar anggota.</li>
+        <li>Mendorong pengembangan diri dan dakwah sosial melalui berbagai kegiatan.</li>
+      </ul>
+      <p>Kami percaya bahwa ilmu dan akhlak yang baik akan membawa perubahan positif bagi umat dan bangsa.</p>
+    </section>
+
+    <!-- Sejarah -->
+    <section id="sejarah" class="content-section" tabindex="0">
+      <h2>Sejarah</h2>
+      <img
+        class="hero-image"
+        src="https://cdn.pixabay.com/photo/2019/10/03/09/38/spain-4522800_1280.jpg"
+        alt="Gambar alam untuk sejarah"
+      />
+      <p>
+        MSI Sabtu Ahad berdiri pada tahun 2015 sebagai inisiatif sekelompok pemuda yang ingin belajar Islam secara serius dan menyenangkan. Seiring waktu, komunitas ini berkembang dan menjadi wadah penting untuk pengembangan ilmu dan karakter generasi muda di lingkungan kami.
+      </p>
+      <p>Kami terus berupaya mengembangkan program-program bermanfaat yang sesuai dengan kebutuhan anggota dan masyarakat sekitar.</p>
+    </section>
+
+    <!-- Struktur Organisasi -->
+    <section id="struktur" class="content-section" tabindex="0">
+      <h2>Struktur Organisasi</h2>
+      <img
+        class="hero-image"
+        src="https://cdn.pixabay.com/photo/2023/01/22/23/59/al-quran-7737590_1280.jpg"
+        alt="Gambar Al Quran untuk struktur organisasi"
+      />
+      <p>Organisasi MSI Sabtu Ahad terdiri dari beberapa divisi yang saling bersinergi untuk menjalankan program kerja, antara lain:</p>
+      <ul>
+        <li>Ketua Umum: Memimpin dan mengawasi jalannya organisasi.</li>
+        <li>Wakil Ketua: Membantu ketua dan bertanggung jawab saat ketua berhalangan.</li>
+        <li>Sekretaris: Mengelola administrasi dan komunikasi.</li>
+        <li>Bendahara: Mengatur keuangan organisasi.</li>
+        <li>Divisi Kajian: Menyusun materi kajian dan mengatur jadwal.</li>
+        <li>Divisi Media dan Dokumentasi: Mendokumentasikan kegiatan dan mengelola media sosial.</li>
+      </ul>
+      <p>Dengan struktur yang jelas, MSI terus maju dan berkembang.</p>
+    </section>
+
+    <!-- Jadwal Kajian -->
+    <section id="jadwal" class="content-section" tabindex="0">
+      <h2>Jadwal Kajian</h2>
+      <img
+        class="hero-image"
+        src="https://cdn.pixabay.com/photo/2024/03/20/06/23/ai-generated-8644739_960_720.jpg"
+        alt="Gambar alam untuk jadwal kajian"
+      />
+      <p>Kajian rutin diselenggarakan setiap Sabtu dan Ahad pukul 08.00 hingga 10.00 WIB di Masjid Nurul Ilmi. Berikut jadwal pokok kajian:</p>
+      <ul>
+        <li><strong>Sabtu:</strong> Tafsir Al-Qur'an oleh Ust. Harun</li>
+        <li><strong>Ahad:</strong> Hadits Arbain oleh Ust. Muadz</li>
+      </ul>
+      <p>Kami mengundang seluruh anggota dan masyarakat yang ingin menambah wawasan keislaman.</p>
+    </section>
+
+    <!-- Dokumentasi -->
+    <section id="dokumentasi" class="content-section" tabindex="0">
+      <h2>Dokumentasi</h2>
+      <img
+        class="hero-image"
+        src="https://cdn.pixabay.com/photo/2024/04/05/19/21/ramadan-8678086_960_720.png"
+        alt="Gambar dokumentasi islami"
+      />
+      <p>Kami mendokumentasikan setiap kegiatan kajian dan acara sosial melalui foto dan video yang kami unggah secara berkala.</p>
+      <p>Galeri dokumentasi ini bertujuan untuk memberikan gambaran nyata aktivitas positif kami serta menjadi arsip kenangan berharga.</p>
+      <img
+        class="hero-image"
+        src="https://cdn.pixabay.com/photo/2020/04/17/15/36/ramadan-5055662_640.jpg"
+        alt="Gambar dokumentasi islami"
+      />
+      <img
+        class="hero-image"
+        src="https://cdn.pixabay.com/photo/2020/04/19/19/26/religion-5065184_640.jpg"
+        alt="Gambar dokumentasi islami"
+      />
+      <img
+        class="hero-image"
+        src="https://cdn.pixabay.com/photo/2020/04/17/15/36/ramadan-5055663_640.jpg"
+        alt="Gambar dokumentasi islami"
+      />
+    </section>
+
+    <!-- Pendaftaran -->
+    <section id="daftar" class="content-section" tabindex="0">
+      <h2>Pendaftaran Anggota</h2>
+      <p>Bagi yang ingin bergabung bersama kami, berikut syarat pendaftaran:</p>
+      <ul>
+        <li>Pelajar atau mahasiswa aktif</li>
+        <li>Komitmen mengikuti kajian minimal 3 kali dalam sebulan</li>
+        <li>Mengisi formulir pendaftaran online yang disediakan</li>
+      </ul>
+      <p>Silakan klik tautan berikut untuk mengisi formulir pendaftaran: <a href="#" target="_blank" rel="noopener noreferrer">Formulir Pendaftaran MSI-SA</a></p>
+      <p>Selamat bergabung dan tumbuh bersama kami!</p>
+
+      <form id="pendaftaranForm" style="margin-top:1rem;">
+        <label for="nama">Nama Lengkap</label><br />
+        <input type="text" id="nama" name="nama" placeholder="Nama lengkap..." required style="width: 100%; padding: 8px; margin-bottom: 0.5rem;" />
+        
+        <label for="email">Email</label><br />
+        <input type="email" id="email" name="email" placeholder="Email aktif..." required style="width: 100%; padding: 8px; margin-bottom: 0.5rem;" />
+        
+        <label for="status">Status</label><br />
+        <select id="status" name="status" required style="width: 100%; padding: 8px; margin-bottom: 0.5rem;">
+          <option value="" disabled selected>Pilih status</option>
+          <option value="pelajar">Pelajar</option>
+          <option value="mahasiswa">Mahasiswa</option>
+          <option value="lainnya">Lainnya</option>
+        </select>
+        
+        <button type="submit" style="background-color: #00796b; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">Daftar</button>
+        <div class="form-message" id="formMessage" style="margin-top: 0.5rem;"></div>
+      </form>
+    </section>
+
+    <!-- Kontak -->
+    <section id="kontak" class="content-section" tabindex="0">
+      <h2>Kontak Kami</h2>
+      <p>Untuk informasi lebih lanjut, silakan hubungi kami melalui:</p>
+      <ul>
+        <li>Email: <a href="mailto:Majelisisa@gmail.com">Majelisisa@gmail.com</a></li>
+        <li>Instagram: <a href="https://instagram.com/MSI_SA_INDONESIA" target="_blank" rel="noopener noreferrer">@MSI_SA_INDONESIA</a></li>
+        <li>WhatsApp: <a href="https://wa.me/6282399689611" target="_blank" rel="noopener noreferrer">+62 82399 689611</a></li>
+      </ul>
+      <p>Kami selalu siap membantu dan menerima saran dari Anda.</p>
+    </section>
+  </main>
+
+  <!-- Watermark -->
+  <div class="watermark">M.i Bachmid</div>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('main-content');
+    const submenuItems = document.querySelectorAll('nav ul li.submenu');
+    const navItems = document.querySelectorAll('nav ul li[data-section]');
+    const sections = document.querySelectorAll('.content-section');
+
+    // Toggle sidebar open/close
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      mainContent.classList.toggle('nav-open');
+    });
+
+    // Toggle submenu dropdown
+    submenuItems.forEach(item => {
+      item.addEventListener('click', e => {
+        e.stopPropagation();
+        item.classList.toggle('active');
+        // Toggle aria-expanded for accessibility
+        const expanded = item.getAttribute('aria-expanded') === 'true';
+        item.setAttribute('aria-expanded', !expanded);
+      });
+    });
+
+    // Show section based on clicked nav item
+    navItems.forEach(item => {
+      item.addEventListener('click', e => {
+        e.stopPropagation();
+        const sectionId = item.getAttribute('data-section');
+        if (!sectionId) return;
+
+        sections.forEach(sec => {
+          if (sec.id === sectionId) {
+            sec.classList.add('active');
+            sec.focus();
+          } else {
+            sec.classList.remove('active');
+          }
+        });
+
+        // Close sidebar on mobile after selection
+        if (window.innerWidth < 768) {
+          sidebar.classList.remove('open');
+          mainContent.classList.remove('nav-open');
+        }
+      });
+    });
+
+    // Form validation and submission simulation
+    const form = document.getElementById('pendaftaranForm');
+    const formMessage = document.getElementById('formMessage');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      formMessage.textContent = '';
+      if (!form.checkValidity()) {
+        formMessage.style.color = 'red';
+        formMessage.textContent = 'Mohon lengkapi semua data dengan benar.';
+        return;
+      }
+      // Simulasi sukses
+      formMessage.style.color = 'green';
+      formMessage.textContent = 'Terima kasih telah mendaftar! Kami akan menghubungi Anda segera.';
+      form.reset();
+    });
+  </script>
+</body>
+</html>
