@@ -167,18 +167,58 @@
     }
 
     /* Watermark styling */
-    .watermark {
-      position: fixed;
-      bottom: 10px;
-      right: 15px;
-      font-size: 0.9rem;
-      color: rgba(0, 77, 64, 0.3);
-      user-select: none;
-      pointer-events: none;
-      font-weight: 600;
-      font-family: 'Poppins', sans-serif;
-      z-index: 1200;
-    }
+ .watermark {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 50%;
+  background-color: rgba(0, 77, 64, 0.2);
+  font-weight: bold;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 0 8px rgba(0,0,0,0.15);
+  transition: all 0.3s ease-in-out;
+  z-index: 1200;
+  cursor: default;
+  pointer-events: auto;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 45px;
+  width: 45px;
+  color: #004d40;
+}
+
+.watermark::before {
+  content: "I";
+  transition: opacity 0.3s ease;
+}
+
+.watermark::after {
+  content: "M.I BACHMID";
+  opacity: 0;
+  margin-left: 0.5rem;
+  transition: opacity 0.3s ease;
+  color: #fff;
+}
+
+.watermark:hover {
+  background-color: rgba(0, 77, 64, 0.9);
+  color: #fff;
+  width: auto;
+  padding: 0 14px;
+  border-radius: 25px;
+}
+
+.watermark:hover::before {
+  content: "";
+}
+
+.watermark:hover::after {
+  opacity: 1;
+}
 
     @media (min-width: 768px) {
       nav {
@@ -376,7 +416,7 @@
   </main>
 
   <!-- Watermark -->
-  <div class="watermark">M.i Bachmid</div>
+<div class="watermark"></div>
 
   <script>
     const menuToggle = document.getElementById('menuToggle');
